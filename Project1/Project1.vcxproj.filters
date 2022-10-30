@@ -28,12 +28,6 @@
     <None Include="materials.vs">
       <Filter>源文件</Filter>
     </None>
-    <None Include="lightFrag.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="lightVertex.vs">
-      <Filter>源文件</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">

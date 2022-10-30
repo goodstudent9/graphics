@@ -140,8 +140,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="lightFrag.fs" />
-    <None Include="lightVertex.vs" />
     <None Include="light_cube.fs" />
     <None Include="light_cube.vs" />
     <None Include="materials.fs" />
