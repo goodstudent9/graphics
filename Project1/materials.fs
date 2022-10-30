@@ -4,9 +4,10 @@ out vec4 FragColor;
 
 struct Material {
     //环境光和漫反射光一样
-    sampler2D diffuse;
-    sampler2D specular;    
-    sampler2D add_texture;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;    
+    
     float shininess;
 }; 
 
@@ -19,34 +20,38 @@ struct Light {
 };
 
 in vec3 FragPos;  
-in vec3 Normal;  
-in vec2 TexCoords;
+in vec3 Normal; 
 
 uniform vec3 viewPos;
 uniform Material material;
-uniform Light light;
+uniform Light lights[3];
 
 void main()
 {
     // ambient
-    vec3 ambient = light.ambient * (texture(material.diffuse, TexCoords).rgb + texture(material.add_texture, TexCoords).rgb);
-  	
+    vec3 my_output = vec3(0.0, 0.0, 0.0);
+    
+    for (int i = 0; i < 3; i++)
+    {
+        vec3 ambient = lights[i].ambient * material.ambient ;
+  	    
     // diffuse 
-    vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(light.position - FragPos);
-    float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = light.diffuse * diff * (texture(material.diffuse, TexCoords).rgb + texture(material.add_texture, TexCoords).rgb);
+        vec3 norm = normalize(Normal);
+        vec3 lightDir = normalize(lights[i].position - FragPos);
+        float diff = max(dot(norm, lightDir), 0.0);
+        vec3 diffuse = lights[i].diffuse * diff * material.diffuse;
     
     // specular
-    vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 reflectDir = reflect(-lightDir, norm);  
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-    vec3 tmpRGB = texture(material.specular, TexCoords).rgb;
-    //tmpRGB.x = 1.0 - tmpRGB.x;
-    //tmpRGB.y = 1.0 - tmpRGB.y;
-    //tmpRGB.z = 1.0 - tmpRGB.z;
-    vec3 specular = light.specular * spec * tmpRGB;
+        vec3 viewDir = normalize(viewPos - FragPos);
+        vec3 reflectDir = reflect(-lightDir, norm);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+        vec3 specular = lights[i].specular * spec * material.specular;
         
-    vec3 result = ambient + diffuse + specular;
-    FragColor = vec4(result, 1.0);
+        vec3 result =  ambient+diffuse + specular;
+        my_output += result;
+        //完成光源的赋值！！
+    }
+    
+    
+    FragColor = vec4(my_output, 1.0);
 } 

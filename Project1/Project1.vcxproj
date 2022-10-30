@@ -140,10 +140,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="lightFrag.fs" />
-    <None Include="lightVertex.vs" />
-    <None Include="light_cube.fs" />
-    <None Include="light_cube.vs" />
     <None Include="materials.fs" />
     <None Include="materials.vs" />
     <None Include="packages.config" />
@@ -156,12 +152,6 @@
     <ClInclude Include="camera_m.h" />
     <ClInclude Include="shader_m.h" />
     <ClInclude Include="stb_image.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="C:\Users\11634\Desktop\container.jpg" />
-    <Image Include="container2.png" />
-    <Image Include="container2_specular.png" />
-    <Image Include="matrix.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
