@@ -203,12 +203,14 @@ int main()
         // 
         //这里一定要加一个use函数才可以！！！
         lightingShader.use();
-        lightingShader.setVec3("light.position", lightPos);
+        lightingShader.setVec3("light.position", camera.Position);
         //需要指定light的系数
         lightingShader.setFloat("light.constant", 1.0);
         lightingShader.setFloat("light.one", 0.09);
         lightingShader.setFloat("light.two", 0.032);
-        //lightingShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);平型光需要指定方向。
+        //指定照射的方向和cutoff
+        lightingShader.setVec3("light.direction",camera.Front);
+        lightingShader.setFloat("light.cutoff", glm::cos(glm::radians(12.5f)));
         lightingShader.setVec3("viewPos", camera.Position);
 
         // light properties
@@ -219,7 +221,7 @@ int main()
         //glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // decrease the influence
         //glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
         lightingShader.setVec3("light.ambient", 0.4, 0.4, 0.4);
-        lightingShader.setVec3("light.diffuse", 0.5, 0.5, 0.5);
+        lightingShader.setVec3("light.diffuse", 0.8, 0.8, 0.8);
         lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
         // 载入纹理对象
