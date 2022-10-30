@@ -77,7 +77,7 @@ int main()
 
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader lightingShader("materials.vs", "materials.fs");
+    Shader lightingShader("materials.vs", "material_allight.fs");
     Shader lightCubeShader("light_cube.vs", "light_cube.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -139,7 +139,13 @@ int main()
         glm::vec3(1.5f,  0.2f, -1.5f),
         glm::vec3(-1.3f,  1.0f, -1.5f)
     };
-
+    //点光源的位置
+    glm::vec3 pointLightPositions[] = {
+        glm::vec3(0.7f,  0.2f,  2.0f),
+        glm::vec3(2.3f, -3.3f, -4.0f),
+        glm::vec3(-4.0f,  2.0f, -12.0f),
+        glm::vec3(0.0f,  0.0f, -3.0f)
+    };
     // first, configure the cube's VAO (and VBO)
     unsigned int VBO, cubeVAO;
     glGenVertexArrays(1, &cubeVAO);
@@ -177,7 +183,7 @@ int main()
     unsigned int specuular_texture = loadTexture("container2_specular.png");
     lightingShader.setInt("material.specular", 1);
     unsigned int my_shine = loadTexture("matrix.jpg");
-    lightingShader.setInt("material.add_texture", 2);
+    lightingShader.setInt("material.add_diffuse", 2);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -203,36 +209,49 @@ int main()
         // 
         //这里一定要加一个use函数才可以！！！
         lightingShader.use();
-        lightingShader.setVec3("light.position", camera.Position);
-        //需要指定light的系数
-        lightingShader.setFloat("light.constant", 1.0);
-        lightingShader.setFloat("light.one", 0.09);
-        lightingShader.setFloat("light.two", 0.032);
-        //指定照射的方向和cutoff
-        lightingShader.setVec3("light.direction",camera.Front);
-        lightingShader.setFloat("light.cutoff", glm::cos(glm::radians(10.5f)));
-        lightingShader.setFloat("light.outerCutoff", glm::cos(glm::radians(15.5f)));
+        
 
         lightingShader.setVec3("viewPos", camera.Position);
-
-        // light properties
-        /*glm::vec3 lightColor;
-        lightColor.x = static_cast<float>(sin(glfwGetTime() * 2.0));
-        lightColor.y = static_cast<float>(sin(glfwGetTime() * 0.7));
-        lightColor.z = static_cast<float>(sin(glfwGetTime() * 1.3));*/
-        //glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // decrease the influence
-        //glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-        lightingShader.setVec3("light.ambient", 0.4, 0.4, 0.4);
-        lightingShader.setVec3("light.diffuse", 0.8, 0.8, 0.8);
-        lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-
-        // 载入纹理对象
-        
-        //lightingShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
-        //lightingShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
         lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f); // specular lighting doesn't have full effect on this object's material
-        lightingShader.setFloat("material.shininess", 64.0f);
+        lightingShader.setFloat("material.shinness", 64.0f);
         
+        //增加光源的属性
+        lightingShader.setVec3("dirlight.direction", -0.2f, -1.0f, -0.3f);
+        lightingShader.setVec3("dirlight.ambient", 0.05f, 0.05f, 0.05f);
+        lightingShader.setVec3("dirlight.diffuse", 0.4f, 0.4f, 0.4f);
+        lightingShader.setVec3("dirlight.specular", 0.5f, 0.5f, 0.5f);
+        // point light 1
+        lightingShader.setVec3("pointLights[0].position", pointLightPositions[0]);
+        lightingShader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+        lightingShader.setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
+        lightingShader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
+        lightingShader.setFloat("pointLights[0].constant", 1.0f);
+        lightingShader.setFloat("pointLights[0].one", 0.09f);
+        lightingShader.setFloat("pointLights[0].two", 0.032f);
+        // point light 2
+        lightingShader.setVec3("pointLights[1].position", pointLightPositions[1]);
+        lightingShader.setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
+        lightingShader.setVec3("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
+        lightingShader.setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
+        lightingShader.setFloat("pointLights[1].constant", 1.0f);
+        lightingShader.setFloat("pointLights[1].one", 0.09f);
+        lightingShader.setFloat("pointLights[1].two", 0.032f);
+        // point light 3
+        lightingShader.setVec3("pointLights[2].position", pointLightPositions[2]);
+        lightingShader.setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
+        lightingShader.setVec3("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f);
+        lightingShader.setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
+        lightingShader.setFloat("pointLights[2].constant", 1.0f);
+        lightingShader.setFloat("pointLights[2].one", 0.09f);
+        lightingShader.setFloat("pointLights[2].two", 0.032f);
+        // point light 4
+        lightingShader.setVec3("pointLights[3].position", pointLightPositions[3]);
+        lightingShader.setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
+        lightingShader.setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
+        lightingShader.setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
+        lightingShader.setFloat("pointLights[3].constant", 1.0f);
+        lightingShader.setFloat("pointLights[3].one", 0.09f);
+        lightingShader.setFloat("pointLights[3].two", 0.032f);
         
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -279,7 +298,14 @@ int main()
         lightCubeShader.setMat4("model", model);
 
         glBindVertexArray(lightCubeVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        for (unsigned int i = 0; i < 4; i++)
+        {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, pointLightPositions[i]);
+            model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
+            lightCubeShader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

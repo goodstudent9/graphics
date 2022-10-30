@@ -64,5 +64,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
+    <Text Include="material_allight.fs">
+      <Filter>源文件</Filter>
+    </Text>
+    <Text Include="test.fs">
+      <Filter>源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>
