@@ -210,7 +210,9 @@ int main()
         lightingShader.setFloat("light.two", 0.032);
         //指定照射的方向和cutoff
         lightingShader.setVec3("light.direction",camera.Front);
-        lightingShader.setFloat("light.cutoff", glm::cos(glm::radians(12.5f)));
+        lightingShader.setFloat("light.cutoff", glm::cos(glm::radians(10.5f)));
+        lightingShader.setFloat("light.outerCutoff", glm::cos(glm::radians(15.5f)));
+
         lightingShader.setVec3("viewPos", camera.Position);
 
         // light properties
