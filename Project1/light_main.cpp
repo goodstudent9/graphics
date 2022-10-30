@@ -203,8 +203,12 @@ int main()
         // 
         //这里一定要加一个use函数才可以！！！
         lightingShader.use();
-        //lightingShader.setVec3("light.position", lightPos);平行光源不需要位置
-        lightingShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
+        lightingShader.setVec3("light.position", lightPos);
+        //需要指定light的系数
+        lightingShader.setFloat("light.constant", 1.0);
+        lightingShader.setFloat("light.one", 0.09);
+        lightingShader.setFloat("light.two", 0.032);
+        //lightingShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);平型光需要指定方向。
         lightingShader.setVec3("viewPos", camera.Position);
 
         // light properties
