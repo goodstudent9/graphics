@@ -16,24 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="light_cube.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="light_cube.vs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="materials.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="materials.vs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="lightFrag.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="lightVertex.vs">
-      <Filter>源文件</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -53,19 +35,11 @@
     <ClInclude Include="camera_m.h">
       <Filter>头文件</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="container2.png">
-      <Filter>源文件</Filter>
-    </Image>
-    <Image Include="C:\Users\11634\Desktop\container.jpg">
-      <Filter>源文件</Filter>
-    </Image>
-    <Image Include="container2_specular.png">
-      <Filter>源文件</Filter>
-    </Image>
-    <Image Include="matrix.jpg">
-      <Filter>源文件</Filter>
-    </Image>
+    <ClInclude Include="mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
