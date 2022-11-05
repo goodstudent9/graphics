@@ -16,6 +16,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="materials.fs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="materials.vs">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
