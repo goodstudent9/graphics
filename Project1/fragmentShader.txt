@@ -1,7 +1,7 @@
  #version 330 core
-out vec4 FragColor;
-in vec3 ourColor;
+out vec4 FragColor;//传递给最终opengl的颜色值
+in vec3 ourColor;//这里的输入是vertex的输出
 void main()
 {
-FragColor = vec4(ourColor,1);
+FragColor = vec4(ourColor,1);//将三维的rgb颜色值加上透明度组成四维向量
 }

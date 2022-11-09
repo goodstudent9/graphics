@@ -223,7 +223,8 @@ int main() {
 
 	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	//glEnableVertexAttribArray(0);
-	Shader myshader = Shader("vertexShader.txt", "fragmentShader.txt");
+	Shader myshader = Shader("vertexShader.vs", "fragmentShader.txt");
+	Shader borderShader = Shader("vertexShader.vs", "shaderColor.txt");
 	//正方体的数据坐标
 	float vertices[] = {
 	-0.5f, -0.5f, -0.5f,  1.0f, 0.0f,0.0f,
@@ -282,6 +283,9 @@ int main() {
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_STENCIL_TEST);
+	glStencilFunc(GL_KEEP, GL_KEEP, GL_REPLACE);
+	glDepthFunc(GL_LESS);
 	//change_state(0);
 	//多个立方体的位置
 	glm::vec3 cubePositions[] = {
@@ -299,6 +303,7 @@ int main() {
 	
 
 	while (!glfwWindowShouldClose(window)) {
+
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0, 1, 0));
 		/*trans = glm::translate(trans, glm::vec3(0.6, 0.6, 0));
@@ -332,7 +337,7 @@ int main() {
 
 
 		glClearColor(0.2, 0.3, 0.3, 1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT| GL_STENCIL_BUFFER_BIT);
 
 		float currentFrame = glfwGetTime();
 		
@@ -351,7 +356,13 @@ int main() {
 		int vertexLocation = glGetUniformLocation(shader_program, "ourColor");
 		glUniform4f(vertexLocation, 0, greenVal, 0, 1);*/
 		
+		
+		//在绘制片段的地方，都会被更新为参考值
+		glStencilFunc(GL_ALWAYS, 1, 0xFF);
+		//启用写入
+		glStencilMask(0xFF);
 		glBindVertexArray(VAO);
+		
 		for (int i = 0; i < 10; i++) {
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, cubePositions[i]);
@@ -363,7 +374,38 @@ int main() {
 			myshader.setMatrix("model", model);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
-		
+		//只有不等于1的地方会通过测试
+		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+		//不更新模板
+		glStencilMask(0x00);
+		glDisable(GL_DEPTH_TEST);
+		//选择shader
+		borderShader.use();
+		//画边框
+		//borderShader.setMatrix("model", model);
+		borderShader.setMatrix("view", view);
+		borderShader.setMatrix("projection", projection);
+		glBindVertexArray(VAO);
+		for (int i = 0; i < 10; i++) {
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, cubePositions[i]);
+			float angle = 20.0f * i;
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0, 0.3, 0.5));
+			if (i % 3 == 0) {
+				model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(1.0, 0.3, 0.5));
+			}
+			model = glm::scale(model, glm::vec3(1.1, 1.1, 1.1));
+			borderShader.setMatrix("model", model);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
+		//恢复两个写入和测试
+		glStencilMask(0xFF);
+		glStencilFunc(GL_ALWAYS, 0, 0xFF);
+		glEnable(GL_DEPTH_TEST);
+
+
+
+
 ;		glfwSwapBuffers(window);
 		glfwSetScrollCallback(window, scroll_callback);
 		glfwSetCursorPosCallback(window, mouse_callback);
