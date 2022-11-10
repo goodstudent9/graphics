@@ -140,8 +140,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="lightFrag.fs" />
-    <None Include="lightVertex.vs" />
     <None Include="light_cube.fs" />
     <None Include="light_cube.vs" />
     <None Include="materials.fs" />
@@ -162,6 +160,11 @@
     <Image Include="container2.png" />
     <Image Include="container2_specular.png" />
     <Image Include="matrix.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="material_allight.fs" />
+    <Text Include="readme.txt" />
+    <Text Include="test.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

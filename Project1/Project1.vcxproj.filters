@@ -28,12 +28,6 @@
     <None Include="materials.vs">
       <Filter>源文件</Filter>
     </None>
-    <None Include="lightFrag.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="lightVertex.vs">
-      <Filter>源文件</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -67,5 +61,14 @@
     <Image Include="matrix.jpg">
       <Filter>源文件</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+    <Text Include="material_allight.fs">
+      <Filter>源文件</Filter>
+    </Text>
+    <Text Include="test.fs">
+      <Filter>源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>
