@@ -28,6 +28,12 @@
     <None Include="materials.vs">
       <Filter>源文件</Filter>
     </None>
+    <None Include="grassVertex.vs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="grassFrag.fs">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -59,6 +65,12 @@
       <Filter>源文件</Filter>
     </Image>
     <Image Include="matrix.jpg">
+      <Filter>源文件</Filter>
+    </Image>
+    <Image Include="C:\Users\11634\Desktop\my_grass.png">
+      <Filter>源文件</Filter>
+    </Image>
+    <Image Include="window.png">
       <Filter>源文件</Filter>
     </Image>
   </ItemGroup>

@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="grassFrag.fs" />
+    <None Include="grassVertex.vs" />
     <None Include="light_cube.fs" />
     <None Include="light_cube.vs" />
     <None Include="materials.fs" />
@@ -158,9 +160,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="C:\Users\11634\Desktop\container.jpg" />
+    <Image Include="C:\Users\11634\Desktop\my_grass.png" />
     <Image Include="container2.png" />
     <Image Include="container2_specular.png" />
     <Image Include="matrix.jpg" />
+    <Image Include="window.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="material_allight.fs" />
