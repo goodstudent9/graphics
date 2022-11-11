@@ -34,6 +34,12 @@
     <None Include="grassFrag.fs">
       <Filter>源文件</Filter>
     </None>
+    <None Include="boxTexFrag.fs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="boxTexVertex.vs">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -71,6 +77,24 @@
       <Filter>源文件</Filter>
     </Image>
     <Image Include="window.png">
+      <Filter>源文件</Filter>
+    </Image>
+    <Image Include="skybox\back.jpg">
+      <Filter>源文件</Filter>
+    </Image>
+    <Image Include="skybox\bottom.jpg">
+      <Filter>源文件</Filter>
+    </Image>
+    <Image Include="skybox\front.jpg">
+      <Filter>源文件</Filter>
+    </Image>
+    <Image Include="skybox\left.jpg">
+      <Filter>源文件</Filter>
+    </Image>
+    <Image Include="skybox\right.jpg">
+      <Filter>源文件</Filter>
+    </Image>
+    <Image Include="skybox\top.jpg">
       <Filter>源文件</Filter>
     </Image>
   </ItemGroup>

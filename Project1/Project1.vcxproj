@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="boxTexFrag.fs" />
+    <None Include="boxTexVertex.vs" />
     <None Include="grassFrag.fs" />
     <None Include="grassVertex.vs" />
     <None Include="light_cube.fs" />
@@ -164,6 +166,12 @@
     <Image Include="container2.png" />
     <Image Include="container2_specular.png" />
     <Image Include="matrix.jpg" />
+    <Image Include="skybox\back.jpg" />
+    <Image Include="skybox\bottom.jpg" />
+    <Image Include="skybox\front.jpg" />
+    <Image Include="skybox\left.jpg" />
+    <Image Include="skybox\right.jpg" />
+    <Image Include="skybox\top.jpg" />
     <Image Include="window.png" />
   </ItemGroup>
   <ItemGroup>

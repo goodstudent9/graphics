@@ -17,6 +17,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 unsigned int loadTexture(char const* name);
+unsigned int loadCubeTexture(std::vector<std::string>);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -82,6 +83,7 @@ int main()
     Shader lightingShader("materials.vs", "material_allight.fs");
     Shader lightCubeShader("light_cube.vs", "light_cube.fs");
     Shader grassShader("grassVertex.vs", "grassFrag.fs");
+    Shader CubeShader("boxTexVertex.vs", "boxTexFrag.fs");
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
@@ -168,6 +170,51 @@ int main()
         glm::vec3(-0.3f, 0.0f, -2.3f),
         glm::vec3(0.5f, 0.0f, -0.6f)
     };
+    //天空盒的顶点坐标，是相对于原点位置坐标
+    float skyboxVertices[] = {
+        // positions          
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        -1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f
+    };
 
 
     // first, configure the cube's VAO (and VBO)
@@ -213,6 +260,17 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
     
+    //天空盒数据设置
+    unsigned int cubeBoxVAO, cubeBoxVBO;
+    glGenVertexArrays(1, &cubeBoxVAO);
+    glGenBuffers(1, &cubeBoxVBO);
+    glBindVertexArray(cubeBoxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, cubeBoxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+
     unsigned int my_texture= loadTexture("container2.png");
     lightingShader.use();
     lightingShader.setInt("material.diffuse", 0);
@@ -221,9 +279,23 @@ int main()
     unsigned int my_shine = loadTexture("matrix.jpg");
     lightingShader.setInt("material.add_diffuse", 2);
     //导入纹理
+    grassShader.use();
     unsigned int transparentTexture = loadTexture("window.png");
     grassShader.setInt("texture1", 0);
-
+    //导入天空盒数据
+    std::vector<std::string> faces
+    {
+        "right.jpg",
+        "left.jpg",
+        "top.jpg",
+        "bottom.jpg",
+        "front.jpg",
+        "back.jpg"
+    };
+    unsigned int box_texture = loadCubeTexture(faces);
+    CubeShader.use();
+    CubeShader.setInt("skybox", 0);
+    
 
     
 
@@ -243,18 +315,29 @@ int main()
         processInput(window);
 
         // render
-        // ------
+        // ------g
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 view = camera.GetViewMatrix();
+        //画出天空盒
+        glDepthMask(GL_FALSE);//关闭深度缓存的写入
+        glBindVertexArray(cubeBoxVAO);
+        CubeShader.use();
+        CubeShader.setMat4("projection", projection);
+        glm::mat4 view_cube = glm::mat4(glm::mat3(camera.GetViewMatrix()));
+        CubeShader.setMat4("view", view_cube);
+        //glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, box_texture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDepthMask(GL_TRUE);
 
-        // be sure to activate shader when setting uniforms/drawing objects
-        // 
-        // 
-        // 
+
+
+
+        //画出黑客帝国的箱子
         //这里一定要加一个use函数才可以！！！
         lightingShader.use();
-        
-
         lightingShader.setVec3("viewPos", camera.Position);
         lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f); // specular lighting doesn't have full effect on this object's material
         lightingShader.setFloat("material.shinness", 64.0f);
@@ -298,14 +381,15 @@ int main()
         lightingShader.setFloat("pointLights[3].two", 0.032f);
         
         // view/projection transformations
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        glm::mat4 view = camera.GetViewMatrix();
+        
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
 
         // world transformation
         glm::mat4 model = glm::mat4(1.0f);
         lightingShader.setMat4("model", model);
+
+
 
         // 先要active，才能bind
         glActiveTexture(GL_TEXTURE0);
@@ -314,10 +398,8 @@ int main()
         glBindTexture(GL_TEXTURE_2D, specuular_texture);
         glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_2D, my_shine);
-        
-        
         glBindVertexArray(cubeVAO);
-        //glDrawArrays(GL_TRIANGLES, 0, 36);
+        //画出黑客帝国的箱子
         for (unsigned int i = 0; i < 10; i++)
         {
             //一定要正确的初始化！！
@@ -487,6 +569,36 @@ unsigned int loadTexture(char const* path)
         std::cout << "Texture failed to load at path: " << path << std::endl;
         stbi_image_free(data);
     }
+
+    return textureID;
+}
+unsigned int loadCubeTexture(std::vector<std::string> faces){
+    //生成并且绑定纹理
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+    //读入纹理数据
+    int width, height, nrChannels;
+    unsigned char* data;
+    for (int i = 0; i < faces.size(); i++) {
+        unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+        if (data) {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            stbi_image_free(data);
+        }
+        else {
+            std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+            stbi_image_free(data);
+        }
+    }
+    //设定纹理滤镜
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
     return textureID;
 }
