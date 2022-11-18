@@ -83,48 +83,48 @@ int main()
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
-        // positions          // normals           // texture coords
-        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+        // positions          // normals          
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  
+         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  
 
-        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   
+         0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   
 
-        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  
 
-         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  
+         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  
+         0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  
 
-        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  
+         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  
 
-        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  
+         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f 
     };
 
     // first, configure the cube's VAO (and VBO)
@@ -138,14 +138,12 @@ int main()
     glBindVertexArray(cubeVAO);
 
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // normal attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    //纹理属性
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+   
 
     // second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
     unsigned int lightCubeVAO;
@@ -154,17 +152,16 @@ int main()
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     // note that we update the lamp's position attribute's stride to reflect the updated buffer data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     
-    unsigned int my_texture= loadTexture("container2.png");
+    
     lightingShader.use();
-    lightingShader.setInt("material.diffuse", 0);
-    unsigned int specuular_texture = loadTexture("container2_specular.png");
-    lightingShader.setInt("material.specular", 1);
-    unsigned int my_shine = loadTexture("matrix.jpg");
-    lightingShader.setInt("material.add_texture", 2);
+    lightingShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+    lightingShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+    lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+    lightingShader.setFloat("material.shininess", 32.0f);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -222,13 +219,7 @@ int main()
         glm::mat4 model = glm::mat4(1.0f);
         lightingShader.setMat4("model", model);
 
-        // 先要active，才能bind
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, my_texture);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, specuular_texture);
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, my_shine);
+       
         
         
         glBindVertexArray(cubeVAO);
